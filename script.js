@@ -53,3 +53,4 @@ gridToggle.addEventListener("change", (e) => {
   document.querySelector(".canvas-placeholder")
     .classList.toggle("hide-grid", !e.target.checked);
 });
+
