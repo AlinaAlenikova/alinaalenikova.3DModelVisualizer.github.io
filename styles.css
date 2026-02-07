@@ -82,6 +82,7 @@ button {
   box-shadow: 0 10px 25px rgba(255, 138, 92, 0.6);
 }
 
+
 /* Render Modes */
 
 .render-modes {
@@ -135,8 +136,12 @@ body.light .panel {
   border-radius: 16px;
   margin-bottom: 24px;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255,255,255,0.08);
 }
-
+body.dark .card {
+  box-shadow: 0 10px 40px rgba(99,102,241,0.15);
+}
 .card:hover {
   transform: translateY(-4px);
   box-shadow: 
@@ -160,13 +165,53 @@ body.light .panel {
   display: flex;
   align-items: center;
   justify-content: center;
+   box-shadow: inset 0 0 120px rgba(0,0,0,0.4);
+}
+body.light .viewport {
+  background: radial-gradient(circle at center, #e2e8f0, #cbd5e1);
+  box-shadow: inset 0 0 80px rgba(0,0,0,0.1);
+}
+.canvas-placeholder {
+  width: 85%;
+  height: 85%;
+  border-radius: 16px;
+  background: rgba(255,255,255,0.05);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  opacity: 1;
+
+  position: relative;
+  overflow: hidden;
+}
+.canvas-placeholder::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+
+  background-image:
+    linear-gradient(rgba(255,255,255,0.15) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.15) 1px, transparent 1px);
+
+  background-size: 40px 40px;
+
+  transform: perspective(800px) rotateX(65deg);
+  transform-origin: center bottom;
+
+  opacity: 0.6;
+  pointer-events: none;
 }
 
-#three-container {
-  width: 100%;
-  height: 100%;
+body.light .canvas-placeholder::before {
+  background-image:
+    linear-gradient(rgba(0,0,0,0.15) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,0,0,0.15) 1px, transparent 1px);
 }
-
+body.light .canvas-placeholder {
+  background: rgba(0,0,0,0.05);
+  opacity: 0.8;
+}
 .viewport-overlay {
   position: absolute;
   top: 20px;
@@ -174,7 +219,9 @@ body.light .panel {
   display: flex;
   gap: 16px;
 }
-
+.hide-grid::before {
+  display: none;
+}
 /* =========================
    PROGRESS BAR
 ========================= */
@@ -232,7 +279,24 @@ body.light .panel {
   font-size: 28px;
   font-weight: 600;
 }
+.stats {
+  list-style: none;
+  padding: 0;
+  margin-top: 16px;
+  text-align: center;
+}
 
+.stats li {
+  margin-bottom: 6px;
+  opacity: 0.85;
+}
+.stats li:not(:last-child) {
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  padding-bottom: 6px;
+}
+body.light .stats li:not(:last-child) {
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+}
 /* =========================
    CONTROLS
 ========================= */
@@ -262,7 +326,7 @@ input[type="range"]::-webkit-slider-thumb {
 .camera-presets button:hover {
   background: #34d399;
   color: white;
-  transform: translateY(-2px);
+  transform: translateY(-2px) scale(1.03);
 }
 body.dark::before,
 body.dark::after {
@@ -275,14 +339,27 @@ body.dark::after {
   z-index: -1;
 }
 
+body.dark::before,
+body.dark::after {
+  content: "";
+  position: fixed;
+  width: 500px;
+  height: 500px;
+  border-radius: 50%;
+  filter: blur(140px);
+  z-index: -1;
+  opacity: 0.8;
+}
+
 body.dark::before {
-  background: rgba(255, 138, 92, 0.25);
-  top: -100px;
-  left: -100px;
+  background: radial-gradient(circle, #ff6b6b, #ff8a5c);
+  top: -150px;
+  left: -150px;
 }
 
 body.dark::after {
-  background: rgba(52, 211, 153, 0.2);
-  bottom: -120px;
-  right: -100px;
+  background: radial-gradient(circle, #6366f1, #8b5cf6);
+  bottom: -150px;
+  right: -150px;
 }
+
