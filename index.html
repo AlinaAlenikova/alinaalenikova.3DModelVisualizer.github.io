@@ -1,34 +1,132 @@
 <!DOCTYPE html>
-<html>
-<body>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>3D Model Viewer UI</title>
+
+  <!-- Modern font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="dark">
+
+  <!-- Top Navigation -->
   <header class="topbar">
     <div class="logo">3D Model Viewer</div>
-    <div class="toolbar">
-      <button>Upload</button>
-      <select>
-        <option>PBR</option>
-        <option>Wireframe</option>
-        <option>Normals</option>
-        <option>UV Checker</option>
-        <option>Unlit</option>
-      </select>
+
+    <div class="top-controls">
+      <button class="upload-btn">Upload Model</button>
+
+      <div class="render-modes">
+        <button class="mode active">PBR</button>
+        <button class="mode">Wireframe</button>
+        <button class="mode">Normals</button>
+        <button class="mode">UV Checker</button>
+        <button class="mode">Unlit</button>
+      </div>
+
+      <button id="themeToggle">🌙</button>
     </div>
   </header>
 
-  <div class="main-layout">
-    <aside class="left-panel">
-      <!-- Model Info -->
-      <!-- Performance Dashboard -->
+  <!-- Main Layout -->
+  <div class="layout">
+
+    <!-- LEFT PANEL -->
+    <aside class="panel left">
+
+      <section class="card">
+        <h3>Model Info</h3>
+        <div class="progress-bar">
+          <div class="progress"></div>
+        </div>
+
+        <ul class="stats">
+          <li>Vertices: 24,500</li>
+          <li>Triangles: 15,000</li>
+          <li>Meshes: 12</li>
+          <li>Materials: 6</li>
+          <li>Dimensions: 2.4 × 1.8 × 3.1 m</li>
+        </ul>
+      </section>
+
+      <section class="card">
+        <h3>Performance</h3>
+        <div class="score-container">
+            <svg class="progress-ring" width="120" height="120">
+                <circle class="ring-bg" cx="60" cy="60" r="50"/>
+                <circle class="ring-progress" cx="60" cy="60" r="50"/>
+            </svg>
+            <div class="score-text">85</div>
+        </div>
+
+        <ul class="stats">
+          <li>File Size: 2.5 MB</li>
+          <li>Texture Memory: 8 MB</li>
+          <li>Triangle Count: 15,000</li>
+        </ul>
+
+        <div class="tips">
+          <strong>Optimization Tip:</strong>
+          Reduce texture resolution to improve performance.
+        </div>
+      </section>
+
     </aside>
 
+    <!-- VIEWPORT -->
     <main class="viewport">
-      <div class="canvas-placeholder">3D Viewport</div>
+      <div class="viewport-overlay">
+        <label><input type="checkbox" checked /> Grid</label>
+        <label><input type="checkbox" checked /> Axes</label>
+      </div>
+      <div id="three-container"></div>
     </main>
 
-    <aside class="right-panel">
-      <!-- Lighting Controls -->
-      <!-- Camera Controls -->
+    <!-- RIGHT PANEL -->
+    <aside class="panel right">
+
+      <section class="card">
+        <h3>Lighting Controls</h3>
+
+        <div class="control-group">
+          <label>Main Light Intensity</label>
+          <input type="range" min="0" max="100" value="80">
+          <input type="color" value="#ffffff">
+          <button class="reset">Reset</button>
+        </div>
+
+        <div class="control-group">
+          <label>Ambient Light Intensity</label>
+          <input type="range" min="0" max="100" value="40">
+          <input type="color" value="#ffffff">
+          <button class="reset">Reset</button>
+        </div>
+      </section>
+
+      <section class="card">
+        <h3>Camera Controls</h3>
+
+        <div class="camera-presets">
+          <button>Front</button>
+          <button>Side</button>
+          <button>Top</button>
+          <button>3/4</button>
+        </div>
+
+        <div class="instructions">
+          <p><strong>Mouse:</strong> Rotate (L), Pan (R), Zoom (Scroll)</p>
+          <p><strong>Touch:</strong> Rotate (1), Pan (2), Pinch to Zoom</p>
+        </div>
+      </section>
+
     </aside>
+
   </div>
+  <script type="module" src="script.js"></script>
+
 </body>
 </html>
